@@ -1,10 +1,16 @@
 const TodoData = (props) => {
-    const { name } = props;
+    const { todoList } = props;
+
     return (
         <div className='todo-data'>
-            <div>{name}</div>
-            <div>Learning React</div>
-            <div>Watching Youtube</div>
+            {todoList.map((item, index) => {
+                return (
+                    <div key={item.id} className="todo-item">
+                        {index + 1}. {item.name}
+                        <button>Delete</button>
+                    </div>
+                );
+            })}
         </div>
     );
 }
