@@ -14,6 +14,7 @@ const RegisterPage = () => {
                 message: "Register User",
                 description: "Register success!"
             });
+            console.log(res);
             navigate("/login");
         }
         else {

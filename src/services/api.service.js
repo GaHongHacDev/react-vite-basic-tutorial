@@ -82,6 +82,56 @@ const loginAPI = (email, password) => {
     return axios.post(URL_BACKEND, data);
 }
 
+const fetchUser = () => {
+    const URL_BACKEND = `/api/v1/auth/account`;
+    return axios.get(URL_BACKEND);
+}
+
+const logoutAPI = () => {
+    const URL_BACKEND = `/api/v1/auth/logout`;
+    return axios.post(URL_BACKEND);
+}
+
+const getBooks = (current, pageSize) => {
+    const URL_BACKEND = `/api/v1/book?current=${current}&pageSize=${pageSize}`;
+    return axios.get(URL_BACKEND);
+}
+
+const createBookAPI = (thumbnail, mainText, author, price, quantity, category) => {
+    const URL_BACKEND = `/api/v1/book`;
+
+    const data = {
+        thumbnail,
+        mainText,
+        author,
+        price,
+        quantity,
+        category
+    };
+    return axios.post(URL_BACKEND, data);
+}
+
+const deleteBook = (id) => {
+    const URL_BACKEND = `/api/v1/book/${id}`;
+    return axios.delete(URL_BACKEND);
+}
+
+const updateBookAPI = (_id, thumbnail, mainText, author, price, quantity, category) => {
+    const URL_BACKEND = `/api/v1/book`;
+
+    const data = {
+        _id,
+        thumbnail,
+        mainText,
+        author,
+        price,
+        quantity,
+        category
+    };
+    return axios.put(URL_BACKEND, data);
+}
+
 export {
-    createUserAPI, updateUserAPI, fetchAllUsersAPI, deleteUser, handleUploadFIle, updateUserAvatarAPI, registerUserAPI, loginAPI
+    createUserAPI, updateUserAPI, fetchAllUsersAPI, deleteUser, handleUploadFIle, updateUserAvatarAPI,
+    registerUserAPI, loginAPI, fetchUser, logoutAPI, getBooks, createBookAPI, deleteBook, updateBookAPI
 }

@@ -1,10 +1,34 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 // import './header.css';
-import { Menu } from 'antd';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Children, useState } from 'react';
+import { Menu, message } from 'antd';
+import { AliwangwangOutlined, AppstoreOutlined, LoginOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/auth.context';
+import { logoutAPI } from '../../services/api.service';
 
 const Header = () => {
+    const { user, setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        const res = await logoutAPI();
+        if (res.data) {
+            //clear data
+            localStorage.removeItem("access_token");
+            setUser({
+                email: "",
+                phone: "",
+                fullName: "",
+                role: "",
+                avatar: "",
+                id: ""
+            });
+            message.success("Logout thành công");
+            //redirect to home
+            navigate("/");
+        }
+    }
+
     const items = [
         {
             label: <Link to="/">Home</Link>,
@@ -21,27 +45,31 @@ const Header = () => {
             key: 'books',
             icon: <SettingOutlined />,
         },
-        {
-            label: 'Setting',
+        ...(!user.id ? [{
+            label: <Link to="/login">Đăng nhập</Link>,
+            key: 'login',
+            icon: <LoginOutlined />,
+        }] : []),
+        ...(user.id ? [{
+            label: `Welcome ${user.fullName}`,
             key: 'setting',
-            icon: <SettingOutlined />,
+            icon: <AliwangwangOutlined />,
             children: [
                 {
-                    label: <Link to={"/login"}>Đăng nhập</Link>,
-                    key: 'login'
-                },
-                {
-                    label: 'Đăng xuất',
+                    label: <span onClick={() => { handleLogout() }}>Đăng xuất</span>,
                     key: 'logout'
                 }
             ]
-        }
+        }] : [])
     ];
 
     const [current, setCurrent] = useState('');
     const onClick = e => {
         setCurrent(e.key);
     };
+
+    console.log(">>> Log user:", user);
+
     return (
         <Menu
             onClick={onClick}

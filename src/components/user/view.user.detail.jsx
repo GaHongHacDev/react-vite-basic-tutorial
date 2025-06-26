@@ -39,8 +39,6 @@ const ViewDetailUser = (props) => {
                 setSelectedFile(null);
                 setPreview(null);
                 await loadUser();
-                console.log("check load: ", isDetailOpen);
-
                 notification.success({
                     message: "Update User Avatar",
                     description: "Cập nhật avatar thành công"

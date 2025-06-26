@@ -6,7 +6,7 @@ const UpdateUserModal = (props) => {
     const [fullName, setFullName] = useState("");
     const [id, setId] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate, loadUser } = props;
+    const { isModalUpdateOpen, setIsModalUpdateOpen, dataUpdate, setDataUpdate, loadBook } = props;
 
     useEffect(() => {
         if (dataUpdate) {
@@ -24,7 +24,7 @@ const UpdateUserModal = (props) => {
                 description: `User ${response.data.fullName} update successfully!`
             });
             setIsModalUpdateOpen(false);
-            await loadUser();
+            await loadBook();
         } else {
             notification.error({
                 message: "Error create User Failed",
